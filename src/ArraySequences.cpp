@@ -30,8 +30,75 @@ Difficulty : Medium
 #include <stdlib.h>
 #include <stdio.h>
 #include <math.h>
+int * isGp(int*arr, int len, int start);
+int * isAp(int*arr, int len, int start);
 
 int * find_sequences(int *arr, int len){
 	//Return final array which has 6indexes [AP1_S,AP1_E,AP2_S,AP2_E,GP1_S,GP2_E]
+	if (len <= 0)
+		return NULL;
+	if (arr){
+		int flag = 0;
+		int finalArr[6];
+		int gp[2];
+		int *temp;
+		int k = 0;
+		for (int i = 0; i<len - 2; i++){
+			temp = isAp(arr, len, i);
+			if (temp[0] != temp[1]){
+				finalArr[k++] = temp[0];
+				finalArr[k++] = temp[1];
+				i = temp[1];
+			}
+			if (flag == 0){
+				temp = isGp(arr, len, i);
+				if (temp[0] != temp[1]){
+					gp[0] = temp[0];
+					gp[1] = temp[1];
+					i += 1;
+					flag = 1;
+				}
+			}
+		}
+		finalArr[4] = gp[0];
+		finalArr[5] = gp[1];
+		return finalArr;
+	}
 	return NULL;
+}
+int * isGp(int*arr, int len,int start){
+	float diff = arr[start + 1] / arr[start];
+	int count = 0;
+	int res[2];
+	for (int i = start; i < len-1; i++){
+		if (arr[i + 1] / arr[i] == diff){
+			count++;
+		}
+		else{
+			break;
+		}
+	}
+	if (count >= 2){
+		res[0] = start;
+		res[1] = start + count;	
+	}
+	return res;
+}
+int * isAp(int*arr, int len, int start){
+	float diff = arr[start + 1] - arr[start];
+	int count = 0;
+	int res[2] = { 0 };
+	for (int i = start; i < len - 1; i++){
+		if (arr[i + 1] - arr[i] == diff){
+			count++;
+		}
+		else{
+			break;
+		}
+	}
+	if (count >= 2){
+		res[0] = start;
+		res[1] = start + count;
+	}
+	return res;
 }

@@ -22,7 +22,10 @@ Difficulty : Hard
 #include <stdlib.h>
 #include <stdio.h>
 #include <math.h>
-
+#define year 365
+#define month 30
+int monDiff(struct node *date1, struct node *date2);
+int yearDiff(struct node *date1, struct node *date2);
 struct node{
 	int data;
 	struct node *next;
@@ -30,5 +33,74 @@ struct node{
 
 
 int between_days(struct node *date1head, struct node *date2head){
+	if (date1head&&date2head){
+		struct node *temp1, *temp2;
+		int flag = 0;
+		int totalDays = 0;
+		temp1 = date1head;
+		temp2 = date2head;
+		for (int i = 0; i < 4; i++){
+			temp1 = temp1->next;
+			temp2 = temp2->next;
+		}
+		int mon, day;
+		int years = yearDiff(temp1, temp2);
+		if (years < 0){
+			flag = 1;
+			years *= -1;
+		}
+		totalDays = year*years;
+		temp1 = date1head;
+		temp2 = date2head;
+		for (int i = 0; i < 2; i++){
+			temp1 = temp1->next;
+			temp2 = temp2->next;
+		}
+		mon = monDiff(temp1, temp2);
+		if ((totalDays == 0)&&(mon<0)){
+			mon *= -1;
+			flag = 1;
+		}
+		else  if ((mon < 0) && flag){
+			mon *= -1;
+		}
+		else if (!flag && (mon>0)){
+			mon *= -1;
+		}
+		totalDays += month*mon;
+		temp1 = date1head;
+		temp2 = date2head;
+		day = monDiff(temp1, temp2);
+		if ((day < 0) && flag){
+			day *= -1;
+		}
+		else if (!flag && (day>0)){
+			day *= -1;
+		}
+		if ((totalDays == 0) && (day < 0))
+			day *= -1;
+		totalDays += day;
+		return totalDays - 1;
+	}
 	return -1;
+}
+int yearDiff(struct node *date1, struct node *date2){
+	int d1=0, d2=0;
+	for (int i = 0; i < 4; i++){
+		d1 = d1 * 10 + date1->data;
+		d2 = d2 * 10 + date2->data;
+		date1 = date1->next;
+		date2 = date2->next;
+	}
+	return d1 - d2;
+}
+int monDiff(struct node *date1, struct node *date2){
+	int d1 = 0, d2 = 0;
+	for (int i = 0; i < 2; i++){
+		d1 = d1 * 10 + date1->data;
+		d2 = d2 * 10 + date2->data;
+		date1 = date1->next;
+		date2 = date2->next;
+	}
+	return d1 - d2;
 }

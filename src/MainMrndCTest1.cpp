@@ -28,6 +28,7 @@ All the Best .
 #include "FunctionHeadersMrndCTest1.h"
 #include <stdlib.h>
 #include <stdio.h>
+#include<conio.h>
 
 struct node{
 	int data;
@@ -93,5 +94,14 @@ int main(){
 	int days = between_days(date1head, date2head);
 	printf("Total Days - %d\n",days);
 	*/
-	//Test Concat4 Strings
+	//Test Concat4 Strings/*
+	int dates[2][8] = { { 0, 2, 0, 4, 2, 0, 1, 6 }, { 0, 4, 0, 5, 2, 0, 1, 6 } };
+
+	struct node *date1head = NULL, *date2head = NULL;
+	for (int i = 7; i >= 0; i--){
+		addNode(&date1head, dates[0][i]);
+		addNode(&date2head, dates[1][i]);
+	}
+	int days = between_days(date1head, date2head);
+	_getch();
 }
