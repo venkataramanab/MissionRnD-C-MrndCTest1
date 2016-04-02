@@ -4,7 +4,7 @@ In Case of Multiple strings with smallest length,
 Return the string which occurs alphabetically first .
 
 Ex : (acat, tiger, silica, licaria) O/P: "silicariacatiger"
-Ex : (def,abc,ghi,jkl)   O/P : ìabcdefghijklî (Alphabetically first )
+Ex : (def,abc,ghi,jkl)   O/P : ‚Äúabcdefghijkl‚Äù (Alphabetically first )
 Ex : (apple,pp,pineapple,nea) O/P: "pineapple";
 Ex : (zzzabc,abcdef,yyyzzz,cabyyy) O/P: "cabyyyzzzabcdef" (Order Swapped )
 
@@ -29,5 +29,6 @@ Difficulty : Hard
 
 char * concat_4strings(char *s1, char *s2, char *s3, char *s4){
 	//Return the new string created.
-	return NULL;
+	if (head1&&head2)
+		return -1;
 }
